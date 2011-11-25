@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style type="text/css">
+  html { height: 100% }
+  body { height: 100%; margin: 0; padding: 0 }
+  #map_canvas { height: 100% }
+</style>
+
+<script type="text/javascript"    src="http://maps.googleapis.com/maps/api/js?key=WXbF+TFQFHIs5LD8cJ7V/8/s+idJHaM8&amp;sensor=true"></script>
+<script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js" charset="utf-8"></script>
+<script type="text/javascript" src="waarismijnfiets.json" charset="utf-8"></script>
+<script type="text/javascript">
+  function initialize() {
+    var amsterdam = new google.maps.LatLng(52.370216,   4.895168);
+
+	var markers = [];
+	var marker = null, lat = null, lng = null;
+
+	for (var i=0; i<points.length; i++) {
+		var datapoint = points[i];
+		
+		// for (var j=9; i<datapoint['CAPACITEIT']; j++) {
+			// lat = parseFloat(datapoint['LAT'].replace(',', '.'), 10);
+			// lng = parseFloat(datapoint['LNG'].replace(',', '.'), 10)
+			
+			var point = new google.maps.LatLng(
+				datapoint['LAT'],
+				datapoint['LNG']
+			);
+			
+			marker = new google.maps.Marker({
+				position: point
+			});
+
+			markers.push(marker);
+		// }
+
+	}
+
+    var myOptions = {
+      zoom: 13,
+      center: amsterdam,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+
+    var map = new google.maps.Map(document.getElementById("map_canvas"),
+        myOptions);
+
+	var markerCluster = new MarkerClusterer(map, markers);
+  }
+
+</script>
+</head>
+<body onload="initialize()">
+  <div id="map_canvas" style="width:100%; height:100%"></div>
+</body>
+</html>
